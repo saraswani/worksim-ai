@@ -1,0 +1,58 @@
+name: WorkSim-AI
+version: "1.0.0"
+description: >
+  Real-world office task simulation environment for AI agents.
+  Agents perform email triage, data cleaning, and code review —
+  tasks that mirror actual human productivity work.
+tags:
+  - openenv
+  - real-world
+  - office-tasks
+  - productivity
+author: WorkSim Team
+license: MIT
+
+tasks:
+  - id: email_triage
+    description: Classify inbox emails as urgent, normal, or spam.
+    difficulty: easy
+    max_steps: 5
+    reward_range: [-0.5, 1.0]
+
+  - id: data_cleaning
+    description: Clean a messy CSV dataset according to stated rules.
+    difficulty: medium
+    max_steps: 1
+    reward_range: [0.0, 1.0]
+
+  - id: code_review
+    description: Identify and fix bugs in Python code snippets.
+    difficulty: hard
+    max_steps: 1
+    reward_range: [0.0, 1.0]
+
+observation_space:
+  type: object
+  fields:
+    task_id: string
+    task_name: string
+    input_data: string
+    history: array
+    step_count: integer
+    done: boolean
+
+action_space:
+  type: object
+  fields:
+    action_type: string
+    output: string
+
+reward_signal:
+  type: scalar
+  range: [-0.5, 1.0]
+  incremental: true
+
+interface:
+  reset: "returns initial Observation"
+  step: "Action → (Observation, Reward, done: bool, Info)"
+  state: "returns full environment state dict"
