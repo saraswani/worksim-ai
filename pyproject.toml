@@ -20,23 +20,22 @@ dependencies = [
     "fastapi",
     "uvicorn",
 ]
-
-[project.scripts]
-server = "server.app:start"
-
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 
+[project.scripts]
+server = "server.app:start"
+
 [project.urls]
 "Homepage" = "https://huggingface.co/spaces/user/worksim-ai"
 
 [tool.setuptools]
-packages = ["."]
+packages = { find = { where = ["."], include = ["server*"] } }
+py-modules = ["env", "email_task", "data_clean_task", "code_review_task"]
 
 [tool.openenv]
-# OpenEnv specific configuration if needed
 env_class = "env.WorkSimEnv"
 yaml_path = "openenv.yaml"
