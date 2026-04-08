@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.db
+.venv
+venv/
+.env
+demo_output*
+baseline_results.json
+tasks.py

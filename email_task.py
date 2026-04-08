@@ -95,7 +95,7 @@ class EmailTriageTask:
 
         correct = given == expected
         reward = 1.0 if correct else -0.5
-        feedback = f"Correct! '{given}' ✓" if correct else f"Wrong. Expected '{expected}', got '{given}'."
+        feedback = f"Correct! '{given}' [OK]" if correct else f"Wrong. Expected '{expected}', got '{given}'."
 
         self._index += 1
         done = self._index >= len(self._emails)

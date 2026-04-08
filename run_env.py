@@ -1,47 +1,49 @@
-"""
-run_env.py – Quick interactive demo of WorkSim AI.
-Runs one episode of each task with a naive rule-based agent (no API key needed).
-"""
+import time
+import os
+import sys
 
-from env import WorkSimEnv, Action
+def run_demo():
+    from env import WorkSimEnv, Action
+    print("=" * 60)
+    print("  WorkSim AI – OpenEnv Demo")
+    print("=" * 60)
 
-DEMO_AGENTS = {
-    "email_triage": lambda obs: Action(
-        action_type="classify_email",
-        output="urgent" if "urgent" in obs.input_data.lower() or "down" in obs.input_data.lower()
-               else "spam" if "free" in obs.input_data.lower() or "win" in obs.input_data.lower()
-               else "normal",
-    ),
-    "data_cleaning": lambda obs: Action(
-        action_type="clean_data",
-        output="\n".join(
-            line for line in obs.input_data.split("\n")
-            if "," in line and line.split(",")[0].strip()
-        ),
-    ),
-    "code_review": lambda obs: Action(
-        action_type="review_code",
-        output="# Fixed code\ndef placeholder():\n    pass\n",
-    ),
-}
+    tasks_to_demo = ["email_triage", "data_cleaning", "code_review"]
 
-def run_demo(task_name: str):
-    print(f"\n{'='*55}")
-    print(f"  DEMO – {task_name.upper()}")
-    print(f"{'='*55}")
-    env = WorkSimEnv(task_name=task_name)
-    obs = env.reset()
-    agent = DEMO_AGENTS[task_name]
-    step = 0
+    for task_name in tasks_to_demo:
+        print(f"\n[DEMO] Starting Task: {task_name.upper()}")
+        print("-" * 40)
+        
+        env = WorkSimEnv(task_name=task_name)
+        obs = env.reset()
+        
+        step = 1
+        while not obs.done:
+            print(f"\nStep {step}")
+            print(f"Input Data Snippet: {obs.input_data[:100]}...")
+            
+            # Simple rule-based/mock responses for demo purposes
+            if task_name == "email_triage":
+                model_output = "urgent" if "urgent" in obs.input_data.lower() or "server" in obs.input_data.lower() else "normal"
+            elif task_name == "data_cleaning":
+                # Returns dummy CSV for cleaning demo
+                model_output = "Name,Age,Department\nAlice,30,Engineering\nBob,30,Marketing\nDave,28,Engineering"
+            else:
+                # Returns dummy fix for code review demo
+                model_output = "def find_max(lst):\n    max_val = lst[0]\n    for i in range(len(lst)):\n        if lst[i] > max_val:\n            max_val = lst[i]\n    return max_val"
 
-    while not obs.done:
-        step += 1
-        action = agent(obs)
-        obs, reward, done, info = env.step(action)
-        print(f"  step {step} | reward={reward.value:.3f} | {reward.feedback}")
-
-    print(f"  Cumulative reward: {info.cumulative_reward:.3f}")
+            action = Action(action_type=f"demo_{task_name}", output=model_output)
+            obs, reward, done, _ = env.step(action)
+            
+            print(f"Action Type: {action.action_type}")
+            print(f"Reward Value: {reward.value}")
+            print(f"Feedback: {reward.feedback}")
+            
+            step += 1
+            if step > 5: break # Don't loop forever in demo
+            
+        print(f"\n[DEMO] Task {task_name} Finished.")
+        print("=" * 60)
 
 if __name__ == "__main__":
-    for task in ["email_triage", "data_cleaning", "code_review"]:
-        run_demo(task)
+    run_demo()

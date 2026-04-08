@@ -168,7 +168,7 @@ class CodeReviewTask:
             "total_keywords": len(self._snippet["keywords"]),
         }
         feedback = (
-            f"Syntax {'✓ valid' if syntax_ok else '✗ invalid'}. "
+            f"Syntax {'[OK] valid' if syntax_ok else '[X] invalid'}. "
             f"Fix coverage: {matched}/{len(self._snippet['keywords'])} keywords matched. "
             f"Score: {final:.2f}."
         )

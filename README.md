@@ -11,7 +11,7 @@ pinned: false
 
 > **OpenEnv-compliant simulation environment for real-world office task evaluation of AI agents.**
 
-WorkSim AI benchmarks AI agents on the kind of work humans actually do every day — not toy puzzles or games. Agents triage emails, clean messy data, and fix buggy code, receiving incremental feedback and a final score for each task.
+WorkSim AI benchmarks AI agents on the kind of work humans actually do every day — not toy puzzles or games. Agents triage emails, clean messy data, and fix buggy code, receiving incremental feedback and a final score for each task. This environment is fully **OpenEnv-compliant** and ready for deployment.
 
 ---
 
