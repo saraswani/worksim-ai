@@ -10,6 +10,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-# Default: run the demo (no API key required)
-# Override CMD to run the baseline: docker run -e HF_TOKEN=... worksim python run_baseline.py
-CMD ["python", "run_env.py"]
+# Use port 7860 for HF Spaces compatibility
+EXPOSE 7860
+
+# Run the FastAPI server
+CMD ["python", "app.py"]

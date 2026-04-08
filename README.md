@@ -4,7 +4,7 @@ emoji: 🤖
 colorFrom: blue
 colorTo: green
 sdk: docker
-app_file: run_env.py
+app_file: app.py
 pinned: false
 ---
 # WorkSim AI 🏢🤖
