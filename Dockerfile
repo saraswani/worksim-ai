@@ -6,15 +6,17 @@ LABEL org.opencontainers.image.description="OpenEnv-compliant real-world office 
 WORKDIR /app
 ENV PYTHONPATH=/app
 
-# Install dependencies
-COPY pyproject.toml requirements.txt uv.lock ./
+# Install dependencies first for better caching
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir .
 
-# Copy everything else
+# Copy the entire project code
 COPY . .
 
-# Use port 7860 for HF Spaces compatibility
+# Install the project itself as a package to register the 'server' script
+RUN pip install --no-cache-dir .
+
+# Use port 7860 for HF Spaces compatibility (default for Spaces)
 EXPOSE 7860
 
 # Start the server using the entry point defined in pyproject.toml
