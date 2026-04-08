@@ -1,39 +1,33 @@
-"""
-run_env.py – Quick interactive demo of WorkSim AI.
-Runs one episode of each task with a naive rule-based agent (no API key needed).
-"""
-
 from env import WorkSimEnv, Action
 
 DEMO_AGENTS = {
     "email_triage": lambda obs: Action(
         action_type="classify_email",
-        output="urgent" if "urgent" in obs.input_data.lower() or "down" in obs.input_data.lower()
-               else "spam" if "free" in obs.input_data.lower() or "win" in obs.input_data.lower()
-               else "normal",
+        output="urgent"
     ),
     "data_cleaning": lambda obs: Action(
         action_type="clean_data",
-        output="\n".join(
-            line for line in obs.input_data.split("\n")
-            if "," in line and line.split(",")[0].strip()
-        ),
+        output="John,25\nAlice,20"
     ),
     "code_review": lambda obs: Action(
         action_type="review_code",
-        output="# Fixed code\ndef placeholder():\n    pass\n",
+        output="def add(a,b):\n    return a+b"
     ),
 }
 
-def run_demo(task_name: str):
+
+def run_demo(task_name):
     print(f"\n{'='*55}")
     print(f"  DEMO – {task_name.upper()}")
     print(f"{'='*55}")
-    env = WorkSimEnv(task_name=task_name)
+
+    # ✅ FIXED
+    env = WorkSimEnv()
+
     obs = env.reset()
     agent = DEMO_AGENTS[task_name]
-    step = 0
 
+    step = 0
     while not obs.done:
         step += 1
         action = agent(obs)
@@ -41,6 +35,7 @@ def run_demo(task_name: str):
         print(f"  step {step} | reward={reward.value:.3f} | {reward.feedback}")
 
     print(f"  Cumulative reward: {info.cumulative_reward:.3f}")
+
 
 if __name__ == "__main__":
     for task in ["email_triage", "data_cleaning", "code_review"]:

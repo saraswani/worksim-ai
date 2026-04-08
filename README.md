@@ -1,3 +1,12 @@
+---
+title: WorkSim AI
+emoji: 🤖
+colorFrom: blue
+colorTo: green
+sdk: docker
+app_file: run_env.py
+pinned: false
+---
 # WorkSim AI 🏢🤖
 
 > **OpenEnv-compliant simulation environment for real-world office task evaluation of AI agents.**
