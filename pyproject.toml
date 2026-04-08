@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "worksim-ai"
+version = "1.0.0"
+description = "OpenEnv-compliant real-world office task simulation environment."
+authors = [
+    { name = "WorkSim Team", email = "team@worksim.ai" }
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0",
+    "openai>=1.0",
+    "pyyaml>=6.0",
+    "openenv>=0.1.0",
+    "fastapi",
+    "uvicorn",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://huggingface.co/spaces/user/worksim-ai"
+
+[tool.setuptools]
+packages = ["."]
+
+[tool.openenv]
+# OpenEnv specific configuration if needed
+env_class = "env.WorkSimEnv"
+yaml_path = "openenv.yaml"
